@@ -21,7 +21,24 @@ class GitService {
 
   async getStatus() {
     if (!this.git) throw new Error('Git not initialized');
-    return await this.git.status();
+    const status = await this.git.status();
+    
+    // 직렬화 가능한 형태로 변환
+    return {
+      ahead: status.ahead,
+      behind: status.behind,
+      current: status.current,
+      tracking: status.tracking,
+      staged: status.staged,
+      created: status.created,
+      deleted: status.deleted,
+      modified: status.modified,
+      renamed: status.renamed,
+      conflicted: status.conflicted,
+      not_added: status.not_added,
+      files: status.files,
+      isClean: status.isClean()
+    };
   }
 
   async getDiff(staged: boolean = false) {

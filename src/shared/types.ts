@@ -2,8 +2,9 @@ export interface GitStatus {
   ahead: number;
   behind: number;
   current: string;
+  tracking: string | null;
   files: any[];
-  isClean: () => boolean;
+  isClean: boolean;
   staged: string[];
   created: string[];
   deleted: string[];

@@ -78,7 +78,7 @@ const GitStatus: React.FC = () => {
           </div>
         </div>
 
-        {status.isClean() ? (
+        {status.isClean ? (
           <div className="text-sm text-green-400">Working tree clean</div>
         ) : (
           <div className="space-y-3">
@@ -91,7 +91,7 @@ const GitStatus: React.FC = () => {
           </div>
         )}
 
-        {!status.isClean() && diff && diff.length > 0 && (
+        {!status.isClean && diff && diff.length > 0 && (
           <div className="mt-4 pt-4 border-t border-gray-700">
             <button
               onClick={() => setShowReviewWorkflow(true)}

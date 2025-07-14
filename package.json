@@ -12,7 +12,8 @@
     "preview": "vite preview",
     "electron": "electron .",
     "electron:dev": "npm run build && NODE_ENV=development electron .",
-    "dev:electron": "concurrently \"npm run dev\" \"wait-on http://localhost:5173 && npm run electron:dev\"",
+    "dev:debug": "concurrently \"npm run dev\" \"wait-on http://localhost:5173 && npm run electron:dev\"",
+    "dev:inspect": "concurrently \"npm run dev\" \"wait-on http://localhost:5173 && npm run build && NODE_ENV=development electron --inspect=5858 .\"",
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
@@ -47,13 +48,15 @@
     "@typescript-eslint/parser": "^8.36.0",
     "@vitejs/plugin-react": "^4.6.0",
     "autoprefixer": "^10.4.21",
+    "concurrently": "^9.2.0",
     "electron": "^37.2.1",
     "eslint": "^9.31.0",
     "eslint-plugin-react": "^7.37.5",
     "postcss": "^8.5.6",
     "prettier": "^3.6.2",
     "typescript": "^5.8.3",
-    "vite": "^7.0.4"
+    "vite": "^7.0.4",
+    "wait-on": "^8.0.3"
   },
   "dependencies": {
     "@monaco-editor/react": "^4.7.0",
