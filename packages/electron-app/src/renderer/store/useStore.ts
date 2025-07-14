@@ -16,10 +16,14 @@ interface AppState {
   currentProject: string | null;
   diffSteps: DiffStep[];
   currentStepId: string | null;
+  selectedFilePath: string | null;
+  viewMode: 'overview' | 'file-diff';
   setCurrentProject: (project: string) => void;
   addDiffStep: (step: Omit<DiffStep, 'createdAt' | 'order'>) => void;
   updateStepStatus: (stepId: string, status: DiffStep['status']) => void;
   setCurrentStep: (stepId: string | null) => void;
+  setSelectedFile: (filePath: string | null) => void;
+  setViewMode: (mode: 'overview' | 'file-diff') => void;
   getStepChain: (stepId: string) => DiffStep[];
   getChildrenSteps: (stepId: string) => DiffStep[];
   canApproveStep: (stepId: string) => boolean;
@@ -31,8 +35,18 @@ export const useStore = create<AppState>((set, get) => ({
   currentProject: null,
   diffSteps: [],
   currentStepId: null,
+  selectedFilePath: null,
+  viewMode: 'overview',
   
   setCurrentProject: (project) => set({ currentProject: project }),
+  
+  setSelectedFile: (filePath) => set({ 
+    selectedFilePath: filePath,
+    viewMode: filePath ? 'file-diff' : 'overview',
+    currentStepId: null // 파일 선택 시 리뷰 단계 선택 해제
+  }),
+  
+  setViewMode: (mode) => set({ viewMode: mode }),
   
   addDiffStep: (step) => set((state) => {
     const now = Date.now();

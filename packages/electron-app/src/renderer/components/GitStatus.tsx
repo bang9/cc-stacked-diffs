@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useGit } from '../hooks/useGit';
+import { useStore } from '../store/useStore';
 import ReviewWorkflow from './ReviewWorkflow';
 
 const GitStatus: React.FC = () => {
   const { status, isStatusLoading, statusError, diff } = useGit();
+  const { setSelectedFile } = useStore();
   const [showReviewWorkflow, setShowReviewWorkflow] = useState(false);
 
   if (isStatusLoading) {
@@ -51,15 +53,30 @@ const GitStatus: React.FC = () => {
     if (files.length === 0) return null;
 
     return (
-      <div className="mb-2">
-        <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">
+      <div className="mb-3">
+        <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
           {label} ({files.length})
         </div>
         <div className="space-y-1">
           {files.map((file, index) => (
-            <div key={index} className={`text-sm ${getStatusColor(type)}`}>
-              {file}
-            </div>
+            <button
+              key={index}
+              onClick={() => setSelectedFile(file)}
+              className={`w-full text-left p-2 rounded transition-colors text-sm ${getStatusColor(type)} hover:bg-gray-700 focus:bg-gray-700 focus:outline-none`}
+            >
+              <div className="flex items-center space-x-2">
+                <span className="w-2 h-2 rounded-full" style={{
+                  backgroundColor: 
+                    type === 'staged' ? '#10b981' :
+                    type === 'modified' ? '#f59e0b' :
+                    type === 'created' ? '#3b82f6' :
+                    type === 'deleted' ? '#ef4444' :
+                    type === 'conflicted' ? '#8b5cf6' :
+                    '#6b7280'
+                }}></span>
+                <span className="font-mono truncate">{file}</span>
+              </div>
+            </button>
           ))}
         </div>
       </div>
@@ -73,8 +90,11 @@ const GitStatus: React.FC = () => {
           <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider">
             Git Status
           </h3>
-          <div className="text-xs text-gray-500">
-            Branch: {status.current}
+          <div className="flex items-center space-x-2">
+            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+            <div className="text-xs text-gray-500">
+              Branch: {status.current}
+            </div>
           </div>
         </div>
 

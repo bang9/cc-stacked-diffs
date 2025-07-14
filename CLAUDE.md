@@ -13,15 +13,25 @@ cc-stacked-diffs/ (monorepo)
 ├── packages/
 │   ├── electron-app/          # Main Electron application
 │   │   ├── src/main/          # Electron main process
-│   │   ├── src/renderer/      # React UI
+│   │   ├── src/renderer/      # React UI (uses @cc-stacked-diffs/ui)
 │   │   └── src/shared/        # Shared types
+│   ├── ui/                    # Reusable UI components library
+│   │   ├── src/components/    # shadcn/ui based components
+│   │   │   ├── ui/           # Base shadcn/ui components
+│   │   │   ├── DiffViewer.tsx
+│   │   │   ├── GitStatus.tsx
+│   │   │   ├── Sidebar.tsx
+│   │   │   └── Header.tsx
+│   │   └── src/lib/          # Utilities (cn, etc.)
 │   └── mcp-electron-debug/    # Custom MCP server for debugging
 └── README.md
 ```
 
 ## Tech Stack
 
-- **Frontend**: React 18 + TypeScript + Tailwind CSS
+- **Frontend**: React 19 + TypeScript + Tailwind CSS v4
+- **UI Components**: shadcn/ui with Radix UI primitives
+- **Component Architecture**: Monorepo with dedicated UI package (@cc-stacked-diffs/ui)
 - **Desktop**: Electron 37 with Vite build system
 - **State Management**: Zustand + React Query
 - **Git Integration**: simple-git library
@@ -44,9 +54,9 @@ cc-stacked-diffs/ (monorepo)
 - Auto-refresh toggle for seamless development
 
 ### MCP Integration
-- **Playwright MCP**: Browser automation and testing
-- **Context7 MCP**: Real-time documentation and examples
-- **Custom Electron Debug MCP**: Application debugging tools
+- **Playwright MCP**: Browser automation and testing workflows
+- **Context7 MCP**: Real-time access to React, shadcn/ui, and other library documentation during development
+- **Custom Electron Debug MCP**: Application debugging and process inspection tools
 
 ## Development Commands
 
@@ -69,6 +79,16 @@ npm run lint         # Run ESLint
 npm run format       # Format with Prettier
 ```
 
+### UI Package
+```bash
+cd packages/ui
+npm run build        # Build UI library for distribution
+npm run dev          # Build in watch mode for development
+npm run lint         # Run ESLint on UI components
+npm run typecheck    # Type checking without emit
+npx shadcn@latest add <component>  # Add new shadcn/ui components
+```
+
 ### MCP Debug Server
 ```bash
 cd packages/mcp-electron-debug
@@ -86,21 +106,46 @@ npm run start        # Run built server
 - `services/claudeCodeIntegration.ts` - File watching and Claude Code integration
 
 ### Renderer Process (`packages/electron-app/src/renderer/`)
-- `components/` - React UI components
-  - `DiffViewer.tsx` - Main diff visualization
-  - `GitStatus.tsx` - Git status display
-  - `ClaudeCodeIntegration.tsx` - Claude Code monitoring
-  - `ReviewWorkflow.tsx` - Review step creation
-  - `Sidebar.tsx` - Navigation and controls
+- `components/` - Application-specific React components
+  - `WelcomeMessage.tsx` - Welcome screen for project selection
+  - `ReviewWorkflow.tsx` - Review step creation dialog
+  - `ClaudeCodeIntegration.tsx` - Claude Code monitoring controls
+  - `ReviewStepActions.tsx` - Review step management actions
 - `hooks/` - Custom React hooks
   - `useGit.ts` - Git operations
   - `useClaudeCodeIntegration.ts` - File monitoring
 - `store/useStore.ts` - Zustand state management
+- `App.tsx` - Main application component using @cc-stacked-diffs/ui
+
+### UI Package (`packages/ui/src/`)
+- `components/` - Reusable UI components
+  - `ui/` - Base shadcn/ui components (Button, Card, Dialog, etc.)
+  - `DiffViewer.tsx` - Main diff visualization component
+  - `GitStatus.tsx` - Git status display component
+  - `Sidebar.tsx` - Navigation and controls component
+  - `Header.tsx` - Application header component
+  - `ProjectSelector.tsx` - Project selection component
+- `lib/utils.ts` - Utility functions (cn, etc.)
+- `index.css` - Global styles and CSS variables
+- `index.ts` - Package exports
 
 ### Shared (`packages/electron-app/src/shared/`)
 - `types.ts` - TypeScript interfaces and types
 
 ## Important Implementation Details
+
+### UI Component Architecture
+- **Monorepo Design**: Separate UI package (@cc-stacked-diffs/ui) for component reusability
+- **shadcn/ui Integration**: Modern, accessible components based on Radix UI primitives
+- **Component Props**: All UI components accept props for data and event handlers, making them highly reusable
+- **Design System**: Consistent styling using Tailwind CSS v4 with CSS variables for theming
+- **TypeScript**: Strict typing for all component props and interfaces
+
+### shadcn/ui Integration
+- **Base Components**: Button, Card, Dialog, Tooltip, Tabs, Input, Select, Accordion, Badge, Separator
+- **Custom Styling**: CSS variables system for consistent theming across light/dark modes
+- **Accessibility**: Built-in ARIA support and keyboard navigation from Radix UI
+- **Performance**: Tree-shakable imports and optimized bundle size
 
 ### Git Integration
 - Uses `simple-git` for Git operations
@@ -143,6 +188,13 @@ start_electron_app
 get_app_status
 inspect_main_process
 stop_electron_app
+
+# Test context7 MCP for documentation
+# Automatically available during development for:
+# - React documentation and examples
+# - shadcn/ui component references
+# - Radix UI primitives documentation
+# - Tailwind CSS utilities
 ```
 
 ### Integration Testing
@@ -178,10 +230,14 @@ stop_electron_app
 ## Future Enhancements
 
 1. **Terminal Chat View**: Embedded Claude Code chat interface
-2. **Advanced Diff Tools**: Better merge conflict resolution
-3. **Team Collaboration**: Shared review sessions
-4. **Plugin System**: Extensible architecture
+2. **Advanced Diff Tools**: Better merge conflict resolution with enhanced UI components
+3. **Team Collaboration**: Shared review sessions with real-time UI updates
+4. **Plugin System**: Extensible architecture with component-based plugins
 5. **Cloud Sync**: Cross-device session management
+6. **Theme System**: Advanced theming support with custom CSS variables
+7. **Component Library**: Publish @cc-stacked-diffs/ui as standalone package
+8. **Accessibility**: Enhanced ARIA support and keyboard navigation
+9. **Performance**: Virtual scrolling and code splitting optimizations
 
 ## Development Workflow
 

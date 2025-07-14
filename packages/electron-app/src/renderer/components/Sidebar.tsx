@@ -21,9 +21,8 @@ const Sidebar: React.FC = () => {
   };
 
   return (
-    <aside className="w-80 bg-gray-800 border-r border-gray-700 overflow-y-auto">
+    <aside className="w-96 bg-gray-800 border-r border-gray-700 overflow-y-auto">
       <div className="p-4 space-y-6">
-        <ClaudeCodeIntegration />
         <GitStatus />
         
         <div>
