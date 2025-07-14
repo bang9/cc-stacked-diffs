@@ -6,12 +6,12 @@ export default defineConfig({
     lib: {
       entry: 'src/main/index.ts',
       formats: ['cjs'],
-      fileName: () => 'index.js',
+      fileName: () => 'index.cjs',
     },
     outDir: 'dist/main',
     emptyOutDir: true,
     rollupOptions: {
-      external: ['electron', 'path', 'url'],
+      external: ['electron', 'path', 'url', 'simple-git'],
     },
   },
   resolve: {

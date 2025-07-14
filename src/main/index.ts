@@ -3,7 +3,9 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import './services/gitService.js';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+// ESM에서 __dirname 구하기
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -12,7 +14,7 @@ function createWindow() {
     width: 1400,
     height: 900,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
+      preload: path.join(__dirname, 'preload.cjs'),
       contextIsolation: true,
       nodeIntegration: false,
     },
