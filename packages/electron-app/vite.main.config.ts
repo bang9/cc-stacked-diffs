@@ -11,7 +11,7 @@ export default defineConfig({
     outDir: 'dist/main',
     emptyOutDir: true,
     rollupOptions: {
-      external: ['electron', 'path', 'url', 'simple-git'],
+      external: ['electron', 'path', 'url', 'fs', 'simple-git'],
     },
   },
   resolve: {

@@ -2,6 +2,7 @@ import React from 'react';
 import { useStore } from '../store/useStore';
 import GitStatus from './GitStatus';
 import ReviewStepActions from './ReviewStepActions';
+import ClaudeCodeIntegration from './ClaudeCodeIntegration';
 
 const Sidebar: React.FC = () => {
   const { diffSteps, currentStepId, setCurrentStep } = useStore();
@@ -22,6 +23,7 @@ const Sidebar: React.FC = () => {
   return (
     <aside className="w-80 bg-gray-800 border-r border-gray-700 overflow-y-auto">
       <div className="p-4 space-y-6">
+        <ClaudeCodeIntegration />
         <GitStatus />
         
         <div>

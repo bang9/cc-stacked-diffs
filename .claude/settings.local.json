@@ -10,7 +10,10 @@
       "Bash(git push:*)",
       "Bash(npm run:*)",
       "Bash(claude mcp:*)",
-      "Bash(mv:*)"
+      "Bash(mv:*)",
+      "Bash(npx @upstash/context7-mcp@latest:*)",
+      "Bash(node:*)",
+      "Bash(chmod:*)"
     ],
     "deny": []
   }

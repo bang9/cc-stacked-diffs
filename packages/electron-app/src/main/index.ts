@@ -2,6 +2,7 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import './services/gitService.js';
+import './services/claudeCodeIntegration.js';
 
 // ESM에서 __dirname 구하기
 const __filename = fileURLToPath(import.meta.url);

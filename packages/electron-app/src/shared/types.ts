@@ -40,7 +40,15 @@ export interface ElectronAPI {
     stage: (filePath: string) => Promise<GitResponse<void>>;
     unstage: (filePath: string) => Promise<GitResponse<void>>;
   };
+  claudeIntegration?: {
+    startSession: (workingDir: string) => Promise<any>;
+    stopSession: (workingDir: string) => Promise<any>;
+    getSessions: () => Promise<any>;
+    toggleAutoShowDiff: (enabled: boolean) => Promise<any>;
+  };
   selectDirectory: () => Promise<string | null>;
+  on?: (channel: string, callback: Function) => void;
+  removeListener?: (channel: string, callback: Function) => void;
 }
 
 declare global {
