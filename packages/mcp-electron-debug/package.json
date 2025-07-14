@@ -1,0 +1,32 @@
+{
+  "name": "@cc-stacked-diffs/mcp-electron-debug",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "cc-electron-debug-mcp": "dist/index.js"
+  },
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "lint": "eslint src --ext .ts",
+    "format": "prettier --write \"src/**/*.{ts,js,json}\""
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4",
+    "electron": "^37.2.1",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.13",
+    "@types/ws": "^8.5.13",
+    "eslint": "^9.31.0",
+    "@typescript-eslint/eslint-plugin": "^8.36.0",
+    "@typescript-eslint/parser": "^8.36.0",
+    "prettier": "^3.6.2",
+    "tsx": "^4.7.1",
+    "typescript": "^5.8.3"
+  },
+  "description": "MCP server for debugging Claude Code Stacked Diffs Electron application"
+}

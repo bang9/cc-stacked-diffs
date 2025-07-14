@@ -1,127 +1,23 @@
 {
-  "name": "cc-stacked-diffs",
+  "name": "cc-stacked-diffs-monorepo",
   "version": "1.0.0",
-  "type": "module",
-  "main": "dist/main/index.cjs",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "dev": "vite",
-    "build": "npm run build:main && npm run build:preload && npm run build:renderer",
-    "build:main": "vite build --config vite.main.config.ts",
-    "build:preload": "vite build --config vite.preload.config.ts",
-    "build:renderer": "vite build",
-    "preview": "vite preview",
-    "electron": "electron .",
-    "electron:dev": "npm run build && NODE_ENV=development electron .",
-    "dev:debug": "concurrently \"npm run dev\" \"wait-on http://localhost:5173 && npm run electron:dev\"",
-    "dev:inspect": "concurrently \"npm run dev\" \"wait-on http://localhost:5173 && npm run build && NODE_ENV=development electron --inspect=5858 .\"",
-    "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "lint": "eslint src --ext .ts,.tsx",
-    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,md}\""
+    "dev": "npm run dev --workspace=packages/electron-app",
+    "build": "npm run build --workspace=packages/electron-app",
+    "electron": "npm run electron --workspace=packages/electron-app",
+    "electron:dev": "npm run electron:dev --workspace=packages/electron-app",
+    "dev:debug": "npm run dev:debug --workspace=packages/electron-app",
+    "dev:mcp": "npm run dev --workspace=packages/mcp-electron-debug",
+    "build:all": "npm run build --workspaces",
+    "install:all": "npm install --workspaces"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/bang9/cc-stacked-diffs.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/bang9/cc-stacked-diffs/issues"
-  },
-  "homepage": "https://github.com/bang9/cc-stacked-diffs#readme",
-  "description": "",
   "devDependencies": {
-    "@electron-forge/cli": "^7.8.1",
-    "@electron-forge/maker-deb": "^7.8.1",
-    "@electron-forge/maker-rpm": "^7.8.1",
-    "@electron-forge/maker-squirrel": "^7.8.1",
-    "@electron-forge/maker-zip": "^7.8.1",
-    "@electron-forge/plugin-auto-unpack-natives": "^7.8.1",
-    "@electron-forge/plugin-vite": "^7.8.1",
-    "@tailwindcss/postcss": "^4.1.11",
     "@types/node": "^24.0.13",
-    "@types/react": "^19.1.8",
-    "@types/react-dom": "^19.1.6",
-    "@typescript-eslint/eslint-plugin": "^8.36.0",
-    "@typescript-eslint/parser": "^8.36.0",
-    "@vitejs/plugin-react": "^4.6.0",
-    "autoprefixer": "^10.4.21",
-    "concurrently": "^9.2.0",
-    "electron": "^37.2.1",
-    "eslint": "^9.31.0",
-    "eslint-plugin-react": "^7.37.5",
-    "postcss": "^8.5.6",
-    "prettier": "^3.6.2",
-    "typescript": "^5.8.3",
-    "vite": "^7.0.4",
-    "wait-on": "^8.0.3"
+    "typescript": "^5.8.3"
   },
-  "dependencies": {
-    "@monaco-editor/react": "^4.7.0",
-    "@radix-ui/themes": "^3.2.1",
-    "@tanstack/react-query": "^5.83.0",
-    "monaco-editor": "^0.52.2",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "simple-git": "^3.28.0",
-    "tailwindcss": "^4.1.11",
-    "zustand": "^5.0.6"
-  },
-  "config": {
-    "forge": {
-      "packagerConfig": {
-        "name": "Claude Code Stacked Diffs",
-        "icon": "./assets/icon",
-        "appBundleId": "com.cc.stackeddiffs",
-        "appCategoryType": "public.app-category.developer-tools"
-      },
-      "makers": [
-        {
-          "name": "@electron-forge/maker-squirrel",
-          "config": {
-            "name": "cc_stacked_diffs"
-          }
-        },
-        {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin"
-          ]
-        },
-        {
-          "name": "@electron-forge/maker-deb",
-          "config": {}
-        },
-        {
-          "name": "@electron-forge/maker-rpm",
-          "config": {}
-        }
-      ],
-      "plugins": [
-        {
-          "name": "@electron-forge/plugin-vite",
-          "config": {
-            "build": [
-              {
-                "entry": "src/main/index.ts",
-                "config": "vite.main.config.ts"
-              },
-              {
-                "entry": "src/main/preload.ts",
-                "config": "vite.preload.config.ts"
-              }
-            ],
-            "renderer": [
-              {
-                "name": "main_window",
-                "config": "vite.config.ts"
-              }
-            ]
-          }
-        }
-      ]
-    }
-  }
+  "description": "Claude Code Stacked Diffs Review Tool - Monorepo with custom MCP server"
 }
