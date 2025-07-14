@@ -1,149 +1,434 @@
-# Claude Code Stacked Diffs Review Tool - Product Requirements Document
+# Product Requirements Document (PRD)
+## Agentic Terminal-Based Code Review Desktop Application
 
-## 1. 제품 개요
+**Version:** 2.0  
+**Date:** January 2025  
+**Status:** Updated Draft  
 
-### 1.1 배경
-Claude Code는 강력한 코드 생성 도구이지만 UI가 없어 코드 변경사항을 시각적으로 확인하기 어렵습니다. 이로 인해 개발자들은 대규모 변경사항을 한 번에 리뷰하기 어려워하며, 이는 오류 발생 가능성을 높이고 개발 효율성을 저하시킵니다.
+---
 
-### 1.2 목적
-이 도구는 Claude Code로 생성된 코드 변경사항을 단계별로 분할하여 리뷰할 수 있게 함으로써, 더 안전하고 효율적인 개발 워크플로우를 제공합니다.
+## 1. Executive Summary
 
-### 1.3 핵심 가치
-- **안전성**: 각 변경사항을 개별적으로 검토하여 오류 방지
-- **효율성**: Stacked diffs 방식으로 점진적 리뷰 가능
-- **가시성**: 코드 변경사항을 명확하게 시각화
+### 1.1 Product Overview
+The Agentic Terminal-Based Code Review Desktop Application is a modern macOS desktop tool that revolutionizes the code review process through intelligent automation and intuitive terminal interface. This Electron-based application provides developers with a comprehensive platform for reviewing AI-generated code changes, managing file modifications, and interacting with AI agents through an integrated terminal interface.
 
-## 2. 사용자 페르소나
+### 1.2 Problem Statement
+Current code review processes are fragmented and lack seamless AI integration, making it difficult for developers to:
+- Efficiently review AI-generated code changes in real-time
+- Maintain context between AI code generation and review
+- Manage incremental changes with proper diff visualization
+- Interact seamlessly with AI coding assistants in a unified interface
 
-### 주 사용자
-- Claude Code를 활용하는 개발자
-- 코드 품질에 민감한 시니어 개발자
-- AI 도구를 활용한 개발 워크플로우를 개선하려는 팀
+### 1.3 Solution
+A unified desktop application that combines:
+- Intelligent file queue management for AI-generated changes
+- Advanced diff visualization with line-by-line interaction
+- Interactive terminal for real-time AI code generation and modification
+- Customizable theming system optimized for developer workflows
+- Native macOS integration with Claude Code monitoring
 
-### 사용 시나리오
-1. 개발자가 Claude Code로 복잡한 기능을 구현
-2. 생성된 코드를 여러 논리적 단계로 분할
-3. 각 단계별로 변경사항 리뷰 및 승인
-4. 승인된 변경사항만 staging/commit
+---
 
-## 3. 기능 요구사항
+## 2. Product Goals & Objectives
 
-### 3.1 핵심 기능
+### 2.1 Primary Goals
+- **Streamline AI-Assisted Development**: Reduce code review time by 60% through intelligent automation
+- **Enhance Developer Experience**: Provide intuitive, customizable desktop interface
+- **Improve Code Quality**: Enable thorough review of incremental AI-generated changes
+- **Integrate AI Workflow**: Seamlessly connect code generation and review in one application
 
-#### 3.1.1 변경사항 시각화
-- Git diff 스타일의 변경사항 표시
-- 구문 강조 (Syntax highlighting)
-- 파일별/폴더별 변경사항 그룹화
-- 변경 전/후 비교 뷰
+### 2.2 Success Metrics
+- **User Engagement**: 80% daily active usage among Claude Code users
+- **Review Efficiency**: Average review time < 5 minutes per file
+- **User Satisfaction**: 4.5+ rating on Mac App Store
+- **Adoption Rate**: 90% of users complete onboarding within first session
 
-#### 3.1.2 단계별 리뷰 워크플로우
-- 변경사항을 논리적 단위로 자동/수동 분할
-- 각 단계별 리뷰 상태 관리 (대기중/검토중/승인/거절)
-- 단계별 코멘트 및 피드백 기능
-- 이전 단계로 롤백 기능
+---
 
-#### 3.1.3 Stacked Diffs 관리
-- 의존성 있는 변경사항 체인 시각화
-- 베이스 브랜치 대비 누적 변경사항 표시
-- 각 스택의 독립적인 리뷰 및 승인
+## 3. Target Audience
 
-#### 3.1.4 Git 통합
-- 현재 작업 디렉토리의 Git 상태 모니터링
-- 선택적 staging (git add)
-- 커밋 메시지 템플릿
-- 브랜치 관리 지원
+### 3.1 Primary Users
+- **Claude Code Users**: Developers actively using AI-assisted coding
+- **Senior Developers**: Leading code reviews and architectural decisions
+- **Full-Stack Developers**: Working with complex, multi-file changes
+- **Development Teams**: Collaborating on AI-generated code projects
 
-### 3.2 보조 기능
+### 3.2 User Personas
 
-#### 3.2.1 프로젝트 관리
-- 최근 프로젝트 목록
-- 프로젝트별 설정 저장
-- 리뷰 히스토리 보관
+#### Persona 1: Alex - Senior Frontend Developer
+- **Background**: 5+ years experience, Claude Code power user
+- **Pain Points**: Managing large AI-generated changes, context switching
+- **Goals**: Efficient review process, maintain code quality standards
+- **Usage**: Daily, reviewing 10-20 AI-generated files per session
 
-#### 3.2.2 협업 기능
-- 리뷰 세션 공유 (URL/파일)
-- 팀원 초대 및 권한 관리
-- 실시간 협업 리뷰 (선택사항)
+#### Persona 2: Sam - Full-Stack Developer
+- **Background**: 3+ years experience, integrating AI tools into workflow
+- **Pain Points**: Fragmented workflow between AI generation and review
+- **Goals**: Seamless integration, quick iteration cycles with AI
+- **Usage**: Multiple times daily, generating and iterating on code
 
-#### 3.2.3 통합 기능
-- Claude Code와의 연동
-- VS Code/기타 IDE 플러그인
-- GitHub/GitLab PR 연동
+---
 
-## 4. 비기능 요구사항
+## 4. Core Feature Requirements
 
-### 4.1 성능
-- 대용량 diff 처리 (10,000줄 이상)
-- 빠른 로딩 시간 (<2초)
-- 부드러운 스크롤 및 네비게이션
+### 4.1 Three-Panel Interface Architecture
 
-### 4.2 사용성
-- 직관적인 UI/UX
-- 키보드 단축키 지원
-- 다크/라이트 테마
-- 접근성 준수
+#### 4.1.1 File Management Panel (Left Sidebar)
+**Priority:** P0 (Must Have)
 
-### 4.3 보안
-- 로컬 파일 시스템 접근 권한 관리
-- 민감한 정보 마스킹 옵션
-- 보안 코드 리뷰 가이드라인
+**Description:** Centralized queue for AI-generated files awaiting review
 
-### 4.4 호환성
-- macOS 13.0 이상
-- Apple Silicon (M1/M2/M3) 네이티브 지원
-- Intel Mac 호환성
+**Functional Requirements:**
+- Display pending files with intelligent prioritization
+- Show file status indicators (new, modified, deleted, AI-generated)
+- Display change statistics (+additions, -deletions, lines modified)
+- Show timestamps and AI generation context
+- Enable file selection with keyboard navigation
+- Support file filtering by status, type, and modification time
+- Provide batch operations (mark all reviewed, stage selected)
+- Include project tree view for context
 
-## 5. 기술 제약사항
+**Acceptance Criteria:**
+- [ ] Files appear immediately after AI generation detection
+- [ ] Status badges accurately reflect file state and AI involvement
+- [ ] Change statistics update in real-time
+- [ ] File selection instantly updates diff and terminal context
+- [ ] Keyboard shortcuts enable rapid navigation (↑↓ for selection, Space for preview)
+- [ ] Filtering works with regex and simple text patterns
 
-### 5.1 플랫폼
-- macOS 전용 네이티브 애플리케이션
-- Mac App Store 배포 고려
+#### 4.1.2 Advanced Diff Viewer (Right Panel)
+**Priority:** P0 (Must Have)
 
-### 5.2 개발 환경
-- Swift/SwiftUI 또는 Electron 기반
-- Git 명령줄 도구 의존성
-- 로컬 파일 시스템 접근 필요
+**Description:** Sophisticated diff visualization with interactive modification capabilities
 
-## 6. 성공 지표
+**Functional Requirements:**
+- Display unified diff with advanced syntax highlighting
+- Support line-by-line selection for targeted modifications
+- Enable "Modify Selected Lines" with direct terminal integration
+- Show addition/deletion statistics with visual indicators
+- Provide "Mark Reviewed" functionality with commit integration
+- Support side-by-side and unified diff modes
+- Include code folding for large files
+- Offer mini-map for navigation in large diffs
+- Support diff annotations and comments
 
-### 6.1 정량적 지표
-- 리뷰 시간 50% 단축
-- 코드 오류 발견율 30% 향상
-- 일일 활성 사용자 1,000명 달성
+**Acceptance Criteria:**
+- [ ] Diff accurately represents all file changes with proper context
+- [ ] Line selection highlights chosen ranges with visual feedback
+- [ ] Syntax highlighting supports 20+ popular languages
+- [ ] "Modify Selected" action populates terminal with precise context
+- [ ] Review actions integrate with Git staging workflow
+- [ ] Performance remains smooth for files >2000 lines
+- [ ] Mini-map provides quick navigation for large files
 
-### 6.2 정성적 지표
-- 사용자 만족도 4.5/5.0 이상
-- 개발 워크플로우 개선 체감
-- Claude Code 사용 빈도 증가
+#### 4.1.3 Interactive Terminal (Bottom Panel)
+**Priority:** P0 (Must Have)
 
-## 7. 로드맵
+**Description:** AI-powered command interface for code generation and modification
 
-### Phase 1 (MVP) - 2개월
-- 기본 diff 뷰어
-- 단계별 변경사항 분할
-- Git 기본 통합
+**Functional Requirements:**
+- Accept natural language commands for code generation and modification
+- Display command history with AI responses
+- Support command autocomplete with context awareness
+- Enable file modification requests with selected line context
+- Provide real-time AI response streaming
+- Include command templates and shortcuts
+- Support multi-turn conversations with context retention
+- Integrate with file selection for contextual commands
 
-### Phase 2 - 1개월
-- Stacked diffs 지원
-- 고급 리뷰 기능
-- 성능 최적화
+**Acceptance Criteria:**
+- [ ] Commands execute with < 3 seconds average response time
+- [ ] Command history persists across application sessions
+- [ ] Autocomplete suggests relevant commands based on current context
+- [ ] Generated/modified code appears in file queue automatically
+- [ ] Error handling provides clear, actionable feedback
+- [ ] Terminal supports standard shortcuts (Ctrl+C, Ctrl+L, etc.)
+- [ ] Context from selected files/lines enhances AI responses
 
-### Phase 3 - 1개월
-- 협업 기능
-- IDE 통합
-- 분석 및 인사이트
+### 4.2 Advanced Features
 
-## 8. 리스크 및 대응 방안
+#### 4.2.1 Comprehensive Theming System
+**Priority:** P1 (Should Have)
 
-### 8.1 기술적 리스크
-- **Git 통합 복잡성**: 라이브러리 활용 및 단계적 구현
-- **성능 이슈**: 가상화 및 지연 로딩 적용
-- **호환성 문제**: 철저한 테스트 및 베타 프로그램
+**Description:** Professional theming system for developer customization
 
-### 8.2 시장 리스크
-- **경쟁 제품 출현**: 독특한 기능 차별화
-- **사용자 채택률**: 무료 체험 및 커뮤니티 구축
+**Built-in Themes:**
+- **Dracula**: Dark purple theme with high contrast
+- **Tokyo Night**: Modern dark theme with blue accents
+- **GitHub Light**: Clean light theme matching GitHub interface
+- **Monokai Pro**: Classic dark theme with vibrant syntax colors
+- **Atom One Dark**: Popular dark theme with balanced contrast
 
-## 9. 결론
+**Functional Requirements:**
+- Support custom theme creation with full color palette control
+- Enable instant theme switching without application restart
+- Persist user preferences with iCloud sync (optional)
+- Support system theme detection (light/dark mode)
+- Include accessibility-compliant color schemes
+- Provide theme editor interface within application
 
-이 도구는 Claude Code 사용자들의 개발 워크플로우를 혁신적으로 개선할 것입니다. Stacked diffs 방식의 단계별 리뷰를 통해 더 안전하고 효율적인 AI 지원 개발이 가능해집니다.
+**Acceptance Criteria:**
+- [ ] Theme changes apply instantly across all interface elements
+- [ ] Custom themes can be exported/imported as JSON files
+- [ ] All themes meet WCAG 2.1 AA contrast requirements
+- [ ] Theme preferences persist across application updates
+- [ ] System theme detection works automatically
+
+#### 4.2.2 Stacked Diff Management
+**Priority:** P1 (Should Have)
+
+**Description:** Advanced management for incremental AI-generated changes
+
+**Functional Requirements:**
+- Support stacked diffs for related changes with dependency visualization
+- Enable diff comparison between different AI iterations
+- Provide change timeline with branching visualization
+- Support cherry-picking specific changes
+- Include conflict resolution interface
+- Show cumulative impact of stacked changes
+
+**Acceptance Criteria:**
+- [ ] Stacked diffs maintain chronological and logical order
+- [ ] Timeline provides intuitive navigation between iterations
+- [ ] Cherry-picking preserves code integrity and dependencies
+- [ ] Conflicts are clearly highlighted with resolution suggestions
+- [ ] Visual indicators show relationships between related changes
+
+#### 4.2.3 Claude Code Integration
+**Priority:** P0 (Must Have)
+
+**Description:** Native integration with Claude Code for seamless workflow
+
+**Functional Requirements:**
+- Automatic detection of Claude Code file changes
+- Real-time monitoring of project directories
+- Session management for active Claude Code projects
+- Auto-refresh of diff views when files change
+- Integration with Claude Code's iteration completion signals
+
+**Acceptance Criteria:**
+- [ ] File changes appear in queue within 2 seconds of modification
+- [ ] Claude Code sessions can be started/stopped from application
+- [ ] Diff views update automatically when Claude Code modifies files
+- [ ] Integration works reliably across project directory structures
+
+---
+
+## 5. User Experience Requirements
+
+### 5.1 Interface Design Principles
+
+#### 5.1.1 Three-Panel Layout
+- **Responsive Panels**: Resizable panels with saved proportions
+- **Focus Management**: Clear visual indication of active panel
+- **Keyboard Navigation**: Full keyboard accessibility across all panels
+- **Context Awareness**: Panels communicate state and context seamlessly
+
+#### 5.1.2 Interaction Patterns
+- **File Selection**: Single-click to select, double-click to focus diff
+- **Line Selection**: Click for single line, Shift+click for ranges, Cmd+click for multiple
+- **Terminal Commands**: Enter to execute, ↑↓ for history, Tab for autocomplete
+- **Theme Switching**: Cmd+T hotkey with live preview
+- **Panel Navigation**: Cmd+1/2/3 for panel focus, Cmd+W to close
+
+### 5.2 Usability Standards
+- **Learning Curve**: New users productive within 10 minutes
+- **Accessibility**: Full VoiceOver support and high contrast mode
+- **Performance**: Smooth 60fps animations and interactions
+- **Responsiveness**: All actions provide immediate visual feedback
+
+### 5.3 macOS Integration
+- **Native Controls**: Standard macOS window controls and behaviors
+- **Menu Bar**: Full menu bar integration with keyboard shortcuts
+- **Dock Integration**: Badge notifications for pending reviews
+- **Notification Center**: Optional review completion notifications
+- **Spotlight Search**: Integration for quick file access
+
+---
+
+## 6. Technical Architecture
+
+### 6.1 Desktop Application Framework
+- **Platform**: Electron-based macOS desktop application
+- **UI Framework**: React 19 with TypeScript for renderer process
+- **Component Library**: shadcn/ui components with Tailwind CSS
+- **State Management**: Zustand for UI state, React Query for data
+
+### 6.2 Core Services
+- **Git Service**: Native Git integration using simple-git library
+- **File System Service**: Real-time file monitoring and change detection
+- **AI Integration Service**: Claude Code API integration and command processing
+- **Theme Service**: Dynamic theme management and persistence
+
+### 6.3 Performance Requirements
+- **Application Launch**: < 2 seconds cold start
+- **File Loading**: < 500ms for files up to 10MB
+- **Diff Rendering**: < 1 second for 2000+ line diffs
+- **Theme Switching**: < 200ms transition animation
+- **Terminal Response**: < 3 seconds average AI response time
+
+---
+
+## 7. Security & Privacy
+
+### 7.1 Data Security
+- **Local Storage**: All code and preferences stored locally
+- **Secure File Access**: Proper macOS file system permissions
+- **No Cloud Dependencies**: Optional iCloud sync for preferences only
+- **Memory Management**: Secure handling of sensitive code content
+
+### 7.2 AI Integration Security
+- **API Key Management**: Secure storage of Claude Code credentials
+- **Data Transmission**: Encrypted communication with AI services
+- **Privacy Controls**: User control over data sharing with AI services
+- **Local Processing**: Maximum local processing to minimize data exposure
+
+---
+
+## 8. Implementation Roadmap
+
+### 8.1 Phase 1: Core Desktop Application (6 weeks)
+**Deliverables:**
+- Three-panel interface with basic functionality
+- File management with Git integration
+- Simple diff visualization
+- Basic terminal interface
+- Dracula theme implementation
+
+**Success Criteria:**
+- Complete desktop application with core workflow
+- Smooth panel resizing and navigation
+- Basic file review process functional
+
+### 8.2 Phase 2: Advanced Features (4 weeks)
+**Deliverables:**
+- Advanced diff features (line selection, syntax highlighting)
+- Multiple theme system with custom theme support
+- Enhanced terminal with autocomplete and history
+- Claude Code integration for automatic file detection
+- Stacked diff management
+
+**Success Criteria:**
+- Professional-grade diff viewer
+- Seamless AI integration workflow
+- Complete theming system
+
+### 8.3 Phase 3: Polish & Distribution (3 weeks)
+**Deliverables:**
+- Performance optimizations
+- Comprehensive accessibility support
+- macOS App Store preparation
+- Documentation and onboarding
+- Beta testing and feedback integration
+
+**Success Criteria:**
+- App Store ready application
+- Comprehensive user documentation
+- Beta user satisfaction > 4.5/5
+
+---
+
+## 9. Success Metrics & KPIs
+
+### 9.1 User Engagement
+- **Daily Active Users**: 500+ within first 3 months
+- **Session Duration**: Average 45+ minutes per session
+- **Feature Adoption**: 85% of users actively use all three panels
+- **Retention Rate**: 75% weekly retention rate
+
+### 9.2 Performance Metrics
+- **Application Performance**: < 3% CPU usage during idle
+- **Memory Usage**: < 200MB typical usage
+- **Error Rate**: < 0.5% of user actions result in errors
+- **Crash Rate**: < 0.1% of sessions
+
+### 9.3 Business Metrics
+- **App Store Rating**: 4.5+ stars average
+- **User Growth**: 25% month-over-month growth
+- **Support Requests**: < 5% of users require support
+- **Claude Code Integration**: 90% of Claude Code users adopt tool
+
+---
+
+## 10. Risk Assessment & Mitigation
+
+### 10.1 Technical Risks
+| Risk | Probability | Impact | Mitigation |
+|------|-------------|---------|------------|
+| Electron performance issues | Medium | High | Optimize renderer process, implement lazy loading |
+| Git integration complexity | Medium | Medium | Use proven libraries, extensive testing |
+| AI API rate limiting | High | Medium | Implement proper queuing and error handling |
+
+### 10.2 User Experience Risks
+| Risk | Probability | Impact | Mitigation |
+|------|-------------|---------|------------|
+| Complex three-panel interface | Medium | High | Extensive user testing, progressive disclosure |
+| Terminal intimidation factor | High | Medium | Guided onboarding, command suggestions |
+| Theme compatibility issues | Low | Medium | Automated testing across all themes |
+
+### 10.3 Business Risks
+| Risk | Probability | Impact | Mitigation |
+|------|-------------|---------|------------|
+| Claude Code API changes | Medium | High | Maintain flexible integration architecture |
+| Competition from browser tools | High | Medium | Focus on desktop-specific advantages |
+| macOS-only limitation | Medium | Medium | Plan for cross-platform expansion |
+
+---
+
+## 11. Future Enhancements
+
+### 11.1 Short-term (3-6 months)
+- **Windows/Linux Support**: Cross-platform Electron distribution
+- **Plugin System**: Third-party extension support
+- **Advanced Git Features**: Branch management, merge conflict resolution
+- **Team Collaboration**: Shared review sessions
+
+### 11.2 Medium-term (6-12 months)
+- **IDE Integration**: VS Code extension for seamless workflow
+- **Advanced AI Models**: Support for multiple AI providers
+- **Cloud Sync**: Optional cloud synchronization for teams
+- **Analytics Dashboard**: Development insights and metrics
+
+### 11.3 Long-term (12+ months)
+- **Mobile Companion**: iOS app for review notifications
+- **Enterprise Features**: Team management and SSO integration
+- **API Platform**: Public API for third-party integrations
+- **Machine Learning**: Personalized review recommendations
+
+---
+
+## 12. Appendices
+
+### 12.1 Glossary
+- **Stacked Diff**: Sequential code changes that build upon each other
+- **Agentic**: AI-powered autonomous behavior and decision making
+- **Three-Panel Layout**: File management + diff viewer + terminal interface
+- **Claude Code Integration**: Native connection with Anthropic's coding assistant
+
+### 12.2 Keyboard Shortcuts
+| Shortcut | Action |
+|----------|--------|
+| Cmd+1/2/3 | Focus file/diff/terminal panel |
+| ↑↓ | Navigate files in queue |
+| Space | Preview file in diff viewer |
+| Enter | Open file for detailed review |
+| Cmd+R | Mark current file as reviewed |
+| Cmd+T | Toggle theme selector |
+| Cmd+Shift+T | Open theme editor |
+| Cmd+K | Focus terminal and clear |
+
+### 12.3 File Status Indicators
+- 🟢 **New**: Newly created file
+- 🟡 **Modified**: Existing file with changes
+- 🔴 **Deleted**: File marked for deletion
+- 🤖 **AI-Generated**: Created or modified by Claude Code
+- ✅ **Reviewed**: Manually reviewed and approved
+- 📝 **Staged**: Ready for Git commit
+
+---
+
+**Document Control:**
+- **Created by:** Product Team
+- **Last Updated:** January 2025
+- **Next Review:** February 2025
+- **Version History:** Available in project repository
